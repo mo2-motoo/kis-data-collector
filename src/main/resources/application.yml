@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: kis-data-collector
+
+  config:
+    import: optional:file:.env[.properties]
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        highlight_sql: true
+
+  task:
+    execution:
+      pool:
+        core-size: 2
+        max-size: 5
+        queue-capacity: 100
+
+stock:
+  codes: 005930,000660,035420,051910,207940,005380,006400,035720,068270,028260
+
+kis:
+  app-key: ${KS_APP_KEY}
+  app-secret: ${KS_APP_SECRET}
+  account-number: ${KS_ACCOUNT_NUMBER}
+  account-product-code: ${KS_ACCOUNT_PRODUCT_CODE}
+  grant-type: client_credentials
+  scope: oob
+  base-url: https://openapi.koreainvestment.com:9443
+  sandbox-url: https://openapivts.koreainvestment.com:29443
+  token-expiration-minutes: 59
+
+logging:
+  level:
+    com.hsu_mafia.motoo.kisdatacollector: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.web: DEBUG
